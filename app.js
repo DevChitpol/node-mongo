@@ -40,10 +40,10 @@ app.get('/vocabulary', async (req, res) => {
     try{
         const vocabulary = await Vocabulary.find()
         if(vocabulary !== null || vocabulary.length !== 0){
-            res.json({status: 200, length: vocabulary.length, vocabulary: vocabulary})
+            res.send(vocabulary).json({status: 200, length: vocabulary.length, vocabulary: vocabulary})
         }
     }catch(error){
-        res.status(500).json({status: 500, message: error.message})
+        res.status(500).send(error).json({status: 500, message: error.message})
     }
 })
 

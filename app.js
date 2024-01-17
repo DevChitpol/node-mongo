@@ -10,6 +10,7 @@ require('dotenv').config()
 
 
 const mongoose = require('mongoose')
+mongoose.set('useFindAndModify', false)
 const uri = process.env.DATABASE_URI
 
 mongoose.connect(uri, {

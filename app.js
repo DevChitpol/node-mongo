@@ -21,16 +21,8 @@ mongoose.connect(uri, {
     console.log('db conneted')
 })
 .catch(error => {
-    console.log(error)
+    console.log(error.message)
 })
-
-// Vocabulary.findOne({eng: 'b'})
-// .then(have => {
-//     console.log(have)
-// })
-// .catch(error => {
-//     console.log(error.message)
-// })
 
 app.get('/', (req, res) => {
     res.send('Hi Start on server')
@@ -40,10 +32,10 @@ app.get('/vocabulary', async (req, res) => {
     try{
         const vocabulary = await Vocabulary.find()
         if(vocabulary !== null || vocabulary.length !== 0){
-            res.send(vocabulary).json({status: 200, length: vocabulary.length, vocabulary: vocabulary})
+            res.status(200).json({status: 200, length: vocabulary.length, vocabulary: vocabulary})
         }
     }catch(error){
-        res.status(500).send(error).json({status: 500, message: error.message})
+        res.status(500).json({status: 500, message: error.message})
     }
 })
 

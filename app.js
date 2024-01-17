@@ -65,20 +65,14 @@ app.post('/add', async (req, res) => {
     }
 })
 
-app.post('/edit', (req, res) => {
+app.post('/edit', async (req, res) => {
     try{
-        Vocabulary.findOneAndUpdate({number: req.body.number}, {
+        await Vocabulary.findOneAndUpdate({number: req.body.number}, {
             eng: req.body.eng,
             pronunciation: req.body.pronunciation,
             thai: req.body.thai
         })
-        .then(() => {
-            res.status(200).json({status: 200, message: 'updated successfully'})
-        })
-        .catch(error => {
-            res.status(400).json({status: 400, message: error.message})
-        })
-
+        res.status(200).json({status: 200, message: 'updated successfully'})
     }catch(error){
         res.status(500).json({status: 500, message: error.message})
     }

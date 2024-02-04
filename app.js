@@ -2,7 +2,16 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-app.use(cors())
+const urlAllows = ['https://web-english-a03ff.web.app'];
+app.use(cors({
+    origin: function(origin, callback){
+        if(!origin || urlAllows.includes(origin)){
+            callback(null,true);
+        }else{
+            callback(new Error('Not allowed by CORS'));
+        };
+    },
+}));
 app.use(express.json())
 
 const Vocabulary = require('./models/Vocabulary')

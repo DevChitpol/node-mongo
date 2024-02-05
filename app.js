@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const cors = require('cors')
 
-const urlAllows = ['https://web-english-a03ff.web.app'];
+const urlAllows = ['https://web-english-a03ff.web.app', 'http://localhost:5173'];
 app.use(cors({
     origin: function(origin, callback){
         if(!origin || urlAllows.includes(origin)){

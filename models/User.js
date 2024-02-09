@@ -9,6 +9,7 @@ const newVocabulary = new Schema({
 })
 const userSchema = new Schema({
     name: String,
+    newName: String,
     email: String,
     uid: String,
     emailVerified: Boolean,

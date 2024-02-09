@@ -51,4 +51,4 @@ route.post('/edit', async (req, res) => {
     }
 })
 
-export default route;
+module.exports = route;

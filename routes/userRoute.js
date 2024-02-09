@@ -2,28 +2,37 @@ const express = require('express')
 const route = express.Router()
 const User = require('./models/User');
 
-route.post('/add', (req, res) => {
+route.post('/add', async (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
     const uid = req.body.uid;
     const emailVerified = req.body.emailVerified;
-    const newUser = new User({
-        name: name,
-        email: email,
-        uid: uid,
-        emailVerified: emailVerified,
-        vocabulary: []
-    });
-    newUser.save()
-        .then((user) => {
-            if(user){
-                res.status(200).json({message: 'add a user successfully', status: 200, user: user});
-            };
-        })
-        .catch((error) => {
-            const status = error.status;
-            res.status(status).json({message: `server error code: ${error.message}`, status: status});
-        });
+    try{
+        const findUser = await User.findOne({name: name})
+        if(findUser === null){
+            const newUser = new User({
+                name: name,
+                newName: '',
+                email: email,
+                uid: uid,
+                emailVerified: emailVerified,
+                vocabulary: []
+            });
+            newUser.save()
+                .then((user) => {
+                    if(user){
+                        res.status(200).json({message: 'add a user successfully', status: 200, user: user});
+                    };
+                })
+                .catch((error) => {
+                    const status = error.status;
+                    res.status(status).json({message: `server error code: ${error.message}`, status: status});
+                });
+        };
+    }
+    catch(error){
+        res.status(500).json({error: `server error code: ${err}`, status: 500});
+    };
 });
 
 route.post('/vocabulary/add', (req, res) => {
@@ -56,4 +65,4 @@ route.post('/vocabulary/add', (req, res) => {
     });
 });
 
-export default route;
+module.exports = route;

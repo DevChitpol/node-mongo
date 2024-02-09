@@ -13,6 +13,7 @@ const userSchema = new Schema({
     email: String,
     uid: String,
     emailVerified: Boolean,
+    imageUrl: String,
     vocabulary: [newVocabulary]
 })
 

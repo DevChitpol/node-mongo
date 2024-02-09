@@ -7,6 +7,7 @@ route.post('/add', async (req, res) => {
     const email = req.body.email;
     const uid = req.body.uid;
     const emailVerified = req.body.emailVerified;
+    const imageUrl = req.body.imageUrl;
     try{
         const findUser = await User.findOne({name: name})
         if(findUser === null){
@@ -16,6 +17,7 @@ route.post('/add', async (req, res) => {
                 email: email,
                 uid: uid,
                 emailVerified: emailVerified,
+                imageUrl: imageUrl,
                 vocabulary: []
             });
             newUser.save()

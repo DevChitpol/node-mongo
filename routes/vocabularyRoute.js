@@ -1,6 +1,6 @@
 const express = require('express')
 const route = express.Router()
-const Vocabulary = require('./models/Vocabulary');
+const Vocabulary = require('../models/Vocabulary');
 
 route.get('/', async (req, res) => {
     try{

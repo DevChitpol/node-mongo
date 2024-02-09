@@ -67,7 +67,7 @@ route.post('/vocabulary/add', (req, res) => {
     });
 });
 
-route.get('/imageUrl', async (req, res) => {
+route.post('/imageUrl', async (req, res) => {
     try{
         const uid = req.body.uid;
         const findImageUrl = await User.findOne({ uid: uid });

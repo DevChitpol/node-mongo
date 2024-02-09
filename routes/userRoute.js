@@ -67,4 +67,17 @@ route.post('/vocabulary/add', (req, res) => {
     });
 });
 
+route.get('/imageUrl', async (req, res) => {
+    try{
+        const uid = req.body.uid;
+        const findImageUrl = await User.findOne({ uid: uid });
+        if(findImageUrl){
+            res.status(200).json({message: 'find imageUrl successfully', status: 200, imageUrl: findImageUrl.imageUrl})
+        }
+    }
+    catch(error){
+        res.status(500).json({error: `server error code: ${error}`})
+    }
+});
+
 module.exports = route;

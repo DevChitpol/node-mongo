@@ -74,6 +74,7 @@ route.post('/status', async (req, res) => {
         const emailAdmin = process.env.EMAIL;
         const imageUrl = req.body.imageUrl;
         const uid = req.body.uid;
+        console.log(email, emailAdmin)
         if(imageUrl === null){
             const findUser = await User.findOne({uid: uid});
             if(findUser){

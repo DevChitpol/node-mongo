@@ -68,27 +68,32 @@ route.post('/vocabulary/add', (req, res) => {
     });
 });
 
-route.post('/imageUrl', async (req, res) => {
+route.post('/status', async (req, res) => {
     try{
+        const email = req.body.email;
+        const emailAdmin = process.env.EMAIL;
+        const imageUrl = req.body.imageUrl;
         const uid = req.body.uid;
-        const findImageUrl = await User.findOne({ uid: uid });
-        if(findImageUrl){
-            res.status(200).json({message: 'find imageUrl successfully', status: 200, imageUrl: findImageUrl.imageUrl})
-        }
+        if(imageUrl === null){
+            const findUser = await User.findOne({uid: uid});
+            if(findUser){
+                if(email === emailAdmin){
+                    res.status(200).json({statusOnApp: 'Admin', status: 200, imageUrl: findUser.imageUrl});
+                }else{
+                    res.status(200).json({statusOnApp: 'Client', status: 200, imageUrl: findUser.imageUrl});
+                };
+            }
+        }else{
+            if(email === emailAdmin){
+                res.status(200).json({statusOnApp: 'Admin', status: 200});
+            }else{
+                res.status(200).json({statusOnApp: 'Client', status: 200});
+            };
+        };
     }
     catch(error){
-        res.status(500).json({error: `server error code: ${error}`})
+        res.status(500).json({error: 'server error', code: error, status: 500})
     }
-});
-
-route.post('/status', (req, res) => {
-    const email = req.body.email;
-    const emailAdmin = process.env.EMAIL;
-    if(email === emailAdmin){
-        res.status(200).json({statusOnApp: 'Admin', status: 200});
-    }else{
-        res.status(200).json({statusOnApp: 'Client', status: 200});
-    };
 });
 
 module.exports = route;

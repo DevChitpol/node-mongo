@@ -71,7 +71,7 @@ route.post('/vocabulary/add', (req, res) => {
 route.post('/status', async (req, res) => {
     try{
         const email = req.body.email;
-        const emailAdmin = process.env.EMAIL;
+        const emailAdmin = process.env.IS_EMAIL;
         const imageUrl = req.body.imageUrl;
         const uid = req.body.uid;
         console.log(email, emailAdmin)

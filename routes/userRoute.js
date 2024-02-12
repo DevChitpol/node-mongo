@@ -1,7 +1,7 @@
 const express = require('express')
 const route = express.Router()
 const User = require('../models/User');
-
+require('dotenv').config()
 route.post('/add', async (req, res) => {
     const name = req.body.name;
     const email = req.body.email;
@@ -38,12 +38,13 @@ route.post('/add', async (req, res) => {
 });
 
 route.post('/vocabulary/add', (req, res) => {
-    const name = req.body.name;
+    const uid = req.body.uid;
     const eng = req.body.eng;
     const thai = req.body.thai;
     const pronunciation = req.body.pronunciation;
     const number = req.body.number;
-    User.findOne({name: name}, (err, user) => {
+    
+    User.findOne({uid: uid}, (err, user) => {
         if(err){
             res.status(500).json({ error: 'Internal Server Error', status: 500 })
         };
@@ -78,6 +79,16 @@ route.post('/imageUrl', async (req, res) => {
     catch(error){
         res.status(500).json({error: `server error code: ${error}`})
     }
+});
+
+route.post('/status', (req, res) => {
+    const email = req.body.email;
+    const emailAdmin = process.env.EMAIL;
+    if(email === emailAdmin){
+        res.status(200).json({statusOnApp: 'Admin', status: 200});
+    }else{
+        res.status(200).json({statusOnApp: 'Client', status: 200});
+    };
 });
 
 module.exports = route;

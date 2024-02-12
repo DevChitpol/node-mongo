@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors');
 const vocabularyRoute = require('./routes/vocabularyRoute');
 const userRoute = require('./routes/userRoute')
+const dashboardRoute = require('./routes/dashboardRoute')
 
 const urlAllows = ['https://web-english-a03ff.web.app', 'http://localhost:5173'];
 app.use(cors({
@@ -40,6 +41,7 @@ app.get('/', (req, res) => {
 
 app.use('/vocabulary', vocabularyRoute);
 app.use('/user', userRoute);
+app.use('/dashboard', dashboardRoute)
 
 const port = process.env.PORT || 8000;
 

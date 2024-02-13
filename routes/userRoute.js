@@ -33,7 +33,7 @@ route.post('/add', async (req, res) => {
         };
     }
     catch(error){
-        res.status(500).json({error: `server error code: ${err}`, status: 500});
+        res.status(500).json({error: `server error code: ${error}`, status: 500});
     };
 });
 

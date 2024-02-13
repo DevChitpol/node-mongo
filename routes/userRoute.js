@@ -78,9 +78,9 @@ route.post('/status', async (req, res) => {
             const findUser = await User.findOne({uid: uid});
             if(findUser){
                 if(email === emailAdmin){
-                    res.status(200).json({statusOnApp: 'Admin', status: 200, imageUrl: findUser.imageUrl});
+                    res.status(200).json({statusOnApp: 'Admin', status: 200, user: findUser});
                 }else{
-                    res.status(200).json({statusOnApp: 'Client', status: 200, imageUrl: findUser.imageUrl});
+                    res.status(200).json({statusOnApp: 'Client', status: 200, user: findUser});
                 };
             }
         }else{

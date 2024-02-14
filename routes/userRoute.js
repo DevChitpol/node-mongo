@@ -56,8 +56,8 @@ route.post('/vocabulary/add', (req, res) => {
                 number: number
             })
             user.save()
-                .then(savedUser => {
-                    res.status(200).json({ message: 'User saved successfully', status: 200});
+                .then((saveVocabulary) => {
+                    res.status(200).json({ message: 'User saved successfully', status: 200, newVocabulary: saveVocabulary});
                 })
                 .catch(error => {
                     res.status(500).json({ error: `Error saving user code: ${error.message}`, status: 500});

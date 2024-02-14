@@ -71,26 +71,18 @@ route.post('/vocabulary/add', (req, res) => {
 route.post('/status', async (req, res) => {
     try{
         const email = req.body.email;
-        const emailAdmin = process.env.IS_EMAIL;
-        const imageUrl = req.body.imageUrl;
         const uid = req.body.uid;
-        const stateAddNewVocabulary = req.body.stateAddNewVocabulary;
-        if(imageUrl === null || stateAddNewVocabulary){
-            const findUser = await User.findOne({uid: uid});
-            if(findUser){
-                if(email === emailAdmin){
-                    res.status(200).json({statusOnApp: 'Admin', status: 200, user: findUser});
-                }else{
-                    res.status(200).json({statusOnApp: 'Client', status: 200, user: findUser});
-                };
-            }
-        }else{
+        const emailAdmin = process.env.IS_EMAIL;
+        const findUser = await User.findOne({uid: uid});
+        if(findUser){
             if(email === emailAdmin){
-                res.status(200).json({statusOnApp: 'Admin', status: 200});
+                res.status(200).json({statusOnApp: 'Admin', status: 200, user: findUser});
             }else{
-                res.status(200).json({statusOnApp: 'Client', status: 200});
+                res.status(200).json({statusOnApp: 'Client', status: 200, user: findUser});
             };
-        };
+        }else{
+            res.status(400).json({message: "don't find user", status: 400})
+        }
     }
     catch(error){
         res.status(500).json({error: 'server error', code: error, status: 500})

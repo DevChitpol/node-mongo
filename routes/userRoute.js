@@ -74,7 +74,8 @@ route.post('/status', async (req, res) => {
         const emailAdmin = process.env.IS_EMAIL;
         const imageUrl = req.body.imageUrl;
         const uid = req.body.uid;
-        if(imageUrl === null){
+        const stateAddNewVocabulary = req.body.stateAddNewVocabulary;
+        if(imageUrl === null || stateAddNewVocabulary){
             const findUser = await User.findOne({uid: uid});
             if(findUser){
                 if(email === emailAdmin){

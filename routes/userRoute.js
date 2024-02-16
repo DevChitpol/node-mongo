@@ -74,7 +74,7 @@ route.post('/vocabulary/edit', async (req, res) => {
     try{
         const findAndUpdateVocabulary = await User.findOne({name: name});
         if(findAndUpdateVocabulary){
-            const findVocabulary = findAndUpdateVocabulary.vocabulary.findOne({eng: eng});
+            const findVocabulary = findAndUpdateVocabulary.vocabulary.find((item) => item.eng === eng);
             res.status(200).json({message: 'find end successully', vocabulary: findVocabulary})
         }
     }

@@ -72,10 +72,13 @@ route.post('/vocabulary/edit', async (req, res) => {
     const name = req.body.name;
     const eng = req.body.eng;
     try{
-        const findAndUpdateVocabulary = await User.findOne({name: name});
+        const findAndUpdateVocabulary = await User.findOneAndUpdate(
+            {name: name, "vocabulary.eng": eng},
+            {$set: {'vocabulary.$.eng': 'armm'}},
+            {new: true}
+        );
         if(findAndUpdateVocabulary){
-            const findVocabulary = findAndUpdateVocabulary.vocabulary.find((item) => item.eng === eng);
-            res.status(200).json({message: 'find end successully', vocabulary: findVocabulary})
+            res.status(200).json({message: 'find end successully', vocabulary: findAndUpdateVocabulary})
         }
     }
     catch(error){

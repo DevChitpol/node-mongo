@@ -68,6 +68,19 @@ route.post('/vocabulary/add', (req, res) => {
     });
 });
 
+route.post('/vocabulary/edit', async (req, res) => {
+    const name = req.body.name;
+    const eng = req.body.eng;
+    try{
+        const findAndUpdateVocabulary = await User.findOne({name: name, 'vocabulary.eng': eng})
+        res.status(200).json({message: 'find end successully', vocabulary: findAndUpdateVocabulary})
+    }
+    catch(error){
+        const code = error.code;
+        res.status(500).json({error: 'server error', code: code, status: 500});
+    }
+})
+
 route.post('/status', async (req, res) => {
     try{
         const email = req.body.email;

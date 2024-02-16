@@ -94,7 +94,7 @@ route.post('/vocabulary/edit', async (req, res) => {
     }
 })
 
-route.post('/vocabulary/delete', async (req, res) => {
+route.delete('/vocabulary/delete', async (req, res) => {
     const name = req.body.name;
     const eng = req.body.eng;
     try{

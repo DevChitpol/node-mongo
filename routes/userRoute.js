@@ -71,19 +71,45 @@ route.post('/vocabulary/add', (req, res) => {
 route.post('/vocabulary/edit', async (req, res) => {
     const name = req.body.name;
     const eng = req.body.eng;
+    const pronunciation = req.body.pronunciation;
+    const thai = req.body.thai;
+    const newEng = req.body.newEng;
     try{
         const findAndUpdateVocabulary = await User.findOneAndUpdate(
             {name: name, "vocabulary.eng": eng},
-            {$set: {'vocabulary.$.eng': 'armm'}},
+            {$set: {'vocabulary.$.eng': newEng,
+                'vocabulary.$.pronunciation': pronunciation,
+                'vocabulary.$.thai': thai
+                }
+            },
             {new: true}
         );
         if(findAndUpdateVocabulary){
-            res.status(200).json({message: 'find end successully', vocabulary: findAndUpdateVocabulary})
+            res.status(200).json({message: 'find end successully', vocabulary: findAndUpdateVocabulary.vocabulary, status: 200})
         }
     }
     catch(error){
         const code = error.code;
         res.status(500).json({error: 'server error', code: code, status: 500});
+    }
+})
+
+route.post('/vocabulary/delete', async (req, res) => {
+    const name = req.body.name;
+    const eng = req.body.eng;
+    try{
+        const findAndDelete = await User.findOneAndUpdate(
+            {name: name},
+            {$pull: {vocabulary: {eng: eng}}},
+            {new: true}
+        )
+        if(findAndDelete){
+            res.status(200).json({message: 'delete successfully', vocabulary: findAndDelete, status: 200});
+        }
+    }
+    catch(error){
+        const code = error.code;
+        res.status(500).json({error: 'server error', code: code, status: 500})
     }
 })
 
